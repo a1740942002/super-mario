@@ -2,6 +2,7 @@
 
 import { Event as MarioEvent, useMarioMachine } from '@super-mario/react'
 import Image from 'next/image'
+import { MarioGame } from './components/MarioGame'
 
 export default function Page() {
   const { state, send, marioEvents, getEventDisplayName } = useMarioMachine()
@@ -20,9 +21,7 @@ export default function Page() {
           </li>
         ))}
       </ul>
-      <div>
-        <p>{state.value as string}</p>
-      </div>
+      <MarioGame />
     </main>
   )
 }
