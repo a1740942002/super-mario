@@ -137,7 +137,6 @@ export function MarioGame() {
     })
 
     marioActor.subscribe((state) => {
-      console.log('state', state.value)
       player.use(sprite(state.value as string))
     })
 
