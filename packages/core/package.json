@@ -1,0 +1,10 @@
+{
+  "name": "@super-mario/core",
+  "dependencies": {
+    "typescript": "latest",
+    "xstate": "^5.5.2"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
