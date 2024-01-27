@@ -43,9 +43,9 @@ export function MarioGame() {
     loadSprite(MarioState.FireMario, '/sprites/spike.png')
     loadSprite('grass', '/sprites/grass.png')
     loadSound('score', '/sounds/score.mp3')
-    loadSprite('mushroom', 'https://i.imgur.com/0wMd92p.png')
-    loadSprite('flower', 'https://i.imgur.com/0wMd92p.png')
-    loadSprite('feather', 'https://i.imgur.com/0wMd92p.png')
+    loadSprite('mushroom', '/sprites/mushroom.png')
+    loadSprite('flower', '/sprites/flower.png')
+    loadSprite('feather', '/sprites/feather.png')
 
     setGravity(2400)
 
@@ -54,7 +54,7 @@ export function MarioGame() {
     const level = addLevel(
       [
         // Design the level layout with symbols
-        '@ | ~~ #',
+        '@  ~ # |',
         '========='
       ],
       {
@@ -114,11 +114,8 @@ export function MarioGame() {
       destroy(flower)
       play('score')
 
-      // State
+      // MarioEvent
       marioActor.send({ type: MarioEvent.FlowerCollect })
-      marioActor.subscribe((state) => {
-        player.use(sprite(state.value as string))
-      })
     })
 
     player.onCollide('mushroom', (mushroom: any) => {
@@ -126,11 +123,8 @@ export function MarioGame() {
       destroy(mushroom)
       play('score')
 
-      // State
+      // MarioEvent
       marioActor.send({ type: MarioEvent.MushroomCollect })
-      marioActor.subscribe((state) => {
-        player.use(sprite(state.value as string))
-      })
     })
 
     player.onCollide('feather', (feather: any) => {
@@ -138,11 +132,12 @@ export function MarioGame() {
       destroy(feather)
       play('score')
 
-      // State
+      // MarioEvent
       marioActor.send({ type: MarioEvent.FeatherCollect })
-      marioActor.subscribe((state) => {
-        player.use(sprite(state.value as string))
-      })
+    })
+
+    marioActor.subscribe((state) => {
+      player.use(sprite(state.value as string))
     })
 
     return () => {
