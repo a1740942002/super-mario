@@ -7,7 +7,7 @@ export const marioMachine = createMachine({
   id: 'Mario Machine',
   initial: initialState,
   states: {
-    Mario: {
+    [State.Mario]: {
       on: {
         [Event.FeatherCollect]: {
           target: State.CapeMario

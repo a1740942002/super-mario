@@ -116,17 +116,18 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      let newMario = ''
+      let nextMario = ''
       switch (currentMario) {
         case 'Mario':
         case 'SuperMario':
         case 'CapeMario':
         case 'FireMario':
         default:
-          newMario = 'FireMario'
+          nextMario = 'FireMario'
           break
       }
-      player.use(sprite(newMario))
+      currentMario = nextMario
+      player.use(sprite(nextMario))
     })
 
     player.onCollide('mushroom', (mushroom: any) => {
@@ -137,22 +138,23 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      let newMario = ''
+      let nextMario = ''
       switch (currentMario) {
         case 'Mario':
         case 'SuperMario':
-          newMario = 'SuperMario'
+          nextMario = 'SuperMario'
           break
         case 'CapeMario':
-          newMario = 'CapeMario'
+          nextMario = 'CapeMario'
           break
         case 'FireMario':
-          newMario = 'FireMario'
+          nextMario = 'FireMario'
           break
         default:
           break
       }
-      player.use(sprite(newMario))
+      currentMario = nextMario
+      player.use(sprite(nextMario))
     })
 
     player.onCollide('feather', (feather: any) => {
@@ -163,17 +165,18 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      let newMario = ''
+      let nextMario = ''
       switch (currentMario) {
         case 'Mario':
         case 'SuperMario':
         case 'CapeMario':
         case 'FireMario':
         default:
-          newMario = 'CapeMario'
+          nextMario = 'CapeMario'
           break
       }
-      player.use(sprite(newMario))
+      currentMario = nextMario
+      player.use(sprite(nextMario))
     })
 
     return () => {
