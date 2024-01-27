@@ -1,4 +1,4 @@
-import { createMachine } from 'xstate'
+import { createActor, createMachine } from 'xstate'
 import { State, Event, Events } from './types'
 
 const initialState = State.Mario
@@ -64,3 +64,9 @@ export const marioMachine = createMachine({
     events: {} as Events
   }
 })
+
+// Create an actor that you can send events to.
+// Note: the actor is not started yet!
+export const marioActor = createActor(marioMachine)
+
+marioActor.start() // logs 'Inactive'

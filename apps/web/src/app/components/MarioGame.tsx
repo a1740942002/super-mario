@@ -2,6 +2,11 @@
 
 import React, { useEffect, useRef } from 'react'
 import kaboom from 'kaboom'
+import {
+  Event as MarioEvent,
+  State as MarioState,
+  marioActor
+} from '@super-mario/react'
 
 export function MarioGame() {
   const gameRef = useRef<HTMLCanvasElement>(null)
@@ -32,20 +37,25 @@ export function MarioGame() {
 
     // write all your kaboom code here
     // Load assets
-    loadSprite('bean', '/sprites/bean.png')
-    loadSprite('coin', '/sprites/coin.png')
-    loadSprite('spike', '/sprites/spike.png')
+    loadSprite(MarioState.Mario, '/sprites/bean.png')
+    loadSprite(MarioState.SuperMario, '/sprites/ghosty.png')
+    loadSprite(MarioState.CapeMario, '/sprites/coin.png')
+    loadSprite(MarioState.FireMario, '/sprites/spike.png')
     loadSprite('grass', '/sprites/grass.png')
-    loadSprite('ghosty', '/sprites/ghosty.png')
     loadSound('score', '/sounds/score.mp3')
+    loadSprite('mushroom', 'https://i.imgur.com/0wMd92p.png')
+    loadSprite('flower', 'https://i.imgur.com/0wMd92p.png')
+    loadSprite('feather', 'https://i.imgur.com/0wMd92p.png')
+
     setGravity(2400)
 
     const SPEED = 480
+
     const level = addLevel(
       [
         // Design the level layout with symbols
-        '@  ^ $$',
-        '=========='
+        '@ | ~~ #',
+        '========='
       ],
       {
         // The size of each grid
@@ -55,15 +65,27 @@ export function MarioGame() {
         pos: vec2(100, 300),
         // Define what each symbol means (in components)
         tiles: {
-          '@': () => [sprite('bean'), area(), body(), anchor('bot'), 'player'],
+          '@': () => [
+            // enum
+            // State.Mario => 'Mario'
+            // State.SuperMario => 'SuperMario'
+            // State.CapeMario => 'CapeMario'
+            // State.FireMario => 'FireMario'
+            sprite(MarioState.Mario as string),
+            area(),
+            body(),
+            anchor('bot'),
+            'player'
+          ],
           '=': () => [
             sprite('grass'),
             area(),
             body({ isStatic: true }),
             anchor('bot')
           ],
-          $: () => [sprite('coin'), area(), anchor('bot'), 'coin'],
-          '^': () => [sprite('spike'), area(), anchor('bot'), 'danger']
+          '#': () => [sprite('mushroom'), area(), anchor('bot'), 'mushroom'],
+          '~': () => [sprite('feather'), area(), anchor('bot'), 'feather'],
+          '|': () => [sprite('flower'), area(), anchor('bot'), 'flower']
         }
       }
     )
@@ -86,15 +108,41 @@ export function MarioGame() {
       player.move(SPEED, 0)
     })
 
-    // Back to the original position if hit a "danger" item
-    player.onCollide('danger', () => {
-      player.pos = level.tile2Pos(0, 0)
+    // Eat
+    player.onCollide('flower', (flower: any) => {
+      // Kaboom
+      destroy(flower)
+      play('score')
+
+      // State
+      marioActor.send({ type: MarioEvent.FlowerCollect })
+      marioActor.subscribe((state) => {
+        player.use(sprite(state.value as string))
+      })
     })
 
-    // Eat the coin!
-    player.onCollide('coin', (coin: any) => {
-      destroy(coin)
+    player.onCollide('mushroom', (mushroom: any) => {
+      // Kaboom
+      destroy(mushroom)
       play('score')
+
+      // State
+      marioActor.send({ type: MarioEvent.MushroomCollect })
+      marioActor.subscribe((state) => {
+        player.use(sprite(state.value as string))
+      })
+    })
+
+    player.onCollide('feather', (feather: any) => {
+      // Kaboom
+      destroy(feather)
+      play('score')
+
+      // State
+      marioActor.send({ type: MarioEvent.FeatherCollect })
+      marioActor.subscribe((state) => {
+        player.use(sprite(state.value as string))
+      })
     })
 
     return () => {
