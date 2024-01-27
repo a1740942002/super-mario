@@ -1,7 +1,7 @@
 import { createMachine } from 'xstate'
 import { Status, Event } from './types'
 
-export const machine = createMachine(
+export const marioMachine = createMachine(
   {
     id: 'Mario Machine',
     initial: Status.Mario,

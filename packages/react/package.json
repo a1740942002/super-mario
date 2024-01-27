@@ -8,8 +8,9 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@super-mario/eslint-config": "workspace:*",
+    "@super-mario/typescript-config": "workspace:*",
+    "@super-mario/core": "*",
     "@types/react": "^18.2.46",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.33",
