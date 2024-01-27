@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useRef } from 'react'
 import kaboom from 'kaboom'
 
@@ -35,24 +37,22 @@ export function MarioGame() {
     loadSprite('spike', '/sprites/spike.png')
     loadSprite('grass', '/sprites/grass.png')
     loadSprite('ghosty', '/sprites/ghosty.png')
-    // loadSound('score', '/examples/sounds/score.mp3')
-
-    const SPEED = 480
-
+    loadSound('score', '/sounds/score.mp3')
     setGravity(2400)
 
+    const SPEED = 480
     const level = addLevel(
       [
         // Design the level layout with symbols
         '@  ^ $$',
-        '======='
+        '=========='
       ],
       {
         // The size of each grid
         tileWidth: 64,
         tileHeight: 64,
         // The position of the top left block
-        pos: vec2(100, 200),
+        pos: vec2(100, 300),
         // Define what each symbol means (in components)
         tiles: {
           '@': () => [sprite('bean'), area(), body(), anchor('bot'), 'player'],
