@@ -37,10 +37,10 @@ export function MarioGame() {
 
     // write all your kaboom code here
     // Load assets
-    loadSprite(MarioState.Mario, '/sprites/bean.png')
-    loadSprite(MarioState.SuperMario, '/sprites/ghosty.png')
-    loadSprite(MarioState.CapeMario, '/sprites/coin.png')
-    loadSprite(MarioState.FireMario, '/sprites/spike.png')
+    loadSprite(MarioState.Mario, '/sprites/mario.png')
+    loadSprite(MarioState.SuperMario, '/sprites/super-mario.png')
+    loadSprite(MarioState.CapeMario, '/sprites/cape-mario.png')
+    loadSprite(MarioState.FireMario, '/sprites/fire-mario.png')
     loadSprite('grass', '/sprites/grass.png')
     loadSound('score', '/sounds/score.mp3')
     loadSprite('mushroom', '/sprites/mushroom.png')
@@ -137,6 +137,7 @@ export function MarioGame() {
     })
 
     marioActor.subscribe((state) => {
+      console.log('state', state.value)
       player.use(sprite(state.value as string))
     })
 
