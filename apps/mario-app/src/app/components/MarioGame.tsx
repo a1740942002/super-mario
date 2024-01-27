@@ -54,7 +54,7 @@ export function MarioGame() {
     const level = addLevel(
       [
         // Design the level layout with symbols
-        '@  ~ # |',
+        '# | @ ~',
         '========='
       ],
       {
