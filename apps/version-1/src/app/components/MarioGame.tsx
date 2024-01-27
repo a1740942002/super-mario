@@ -2,11 +2,10 @@
 
 import React, { useEffect, useRef } from 'react'
 import kaboom from 'kaboom'
-import {
-  State as MarioState,
-  Player as MarioPlayer,
-  Power as MarioPower
-} from '../../lib/mario'
+import { mario, superMario, capeMario, fireMario } from '../../lib/mario'
+
+const initMario = mario
+let currentMario = initMario
 
 export function MarioGame() {
   const gameRef = useRef<HTMLCanvasElement>(null)
@@ -37,10 +36,10 @@ export function MarioGame() {
 
     // write all your kaboom code here
     // Load assets
-    loadSprite(MarioState.Mario, '/sprites/mario.png')
-    loadSprite(MarioState.SuperMario, '/sprites/super-mario.png')
-    loadSprite(MarioState.CapeMario, '/sprites/cape-mario.png')
-    loadSprite(MarioState.FireMario, '/sprites/fire-mario.png')
+    loadSprite(mario, '/sprites/mario.png')
+    loadSprite(superMario, '/sprites/super-mario.png')
+    loadSprite(capeMario, '/sprites/cape-mario.png')
+    loadSprite(fireMario, '/sprites/fire-mario.png')
     loadSprite('grass', '/sprites/grass.png')
     loadSound('score', '/sounds/score.mp3')
     loadSprite('mushroom', '/sprites/mushroom.png')
@@ -71,7 +70,7 @@ export function MarioGame() {
             // State.SuperMario => 'SuperMario'
             // State.CapeMario => 'CapeMario'
             // State.FireMario => 'FireMario'
-            sprite(MarioState.Mario as string),
+            sprite(initMario),
             area(),
             body(),
             anchor('bot'),
@@ -92,10 +91,6 @@ export function MarioGame() {
 
     // Get the player object from tag
     const player = level.get('player')[0]
-    const marioPlayer = new MarioPlayer()
-    const updateWindow = (state: string) => {
-      player.use(sprite(state))
-    }
 
     // Movements
     onKeyPress('space', () => {
@@ -121,8 +116,17 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      marioPlayer.collect(MarioPower.Flower)
-      updateWindow(marioPlayer.state)
+      let newMario = ''
+      switch (currentMario) {
+        case 'Mario':
+        case 'SuperMario':
+        case 'CapeMario':
+        case 'FireMario':
+        default:
+          newMario = 'FireMario'
+          break
+      }
+      player.use(sprite(newMario))
     })
 
     player.onCollide('mushroom', (mushroom: any) => {
@@ -133,8 +137,22 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      marioPlayer.collect(MarioPower.Mushroom)
-      updateWindow(marioPlayer.state)
+      let newMario = ''
+      switch (currentMario) {
+        case 'Mario':
+        case 'SuperMario':
+          newMario = 'SuperMario'
+          break
+        case 'CapeMario':
+          newMario = 'CapeMario'
+          break
+        case 'FireMario':
+          newMario = 'FireMario'
+          break
+        default:
+          break
+      }
+      player.use(sprite(newMario))
     })
 
     player.onCollide('feather', (feather: any) => {
@@ -145,8 +163,17 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      marioPlayer.collect(MarioPower.Feather)
-      updateWindow(marioPlayer.state)
+      let newMario = ''
+      switch (currentMario) {
+        case 'Mario':
+        case 'SuperMario':
+        case 'CapeMario':
+        case 'FireMario':
+        default:
+          newMario = 'CapeMario'
+          break
+      }
+      player.use(sprite(newMario))
     })
 
     return () => {
