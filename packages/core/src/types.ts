@@ -1,4 +1,4 @@
-export enum Status {
+export enum State {
   Mario = 'Mario',
   CapeMario = 'CapeMario',
   SuperMario = 'SuperMario',
@@ -10,3 +10,8 @@ export enum Event {
   FeatherCollect = 'feather.collect',
   FlowerCollect = 'flower.collect'
 }
+
+export type Events =
+  | { type: Event.MushroomCollect }
+  | { type: Event.FeatherCollect }
+  | { type: Event.FlowerCollect }

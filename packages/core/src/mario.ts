@@ -1,54 +1,51 @@
 import { createMachine } from 'xstate'
-import { Status, Event } from './types'
+import { State, Event, Events } from './types'
 
 export const marioMachine = createMachine(
   {
     id: 'Mario Machine',
-    initial: Status.Mario,
+    initial: State.Mario,
     states: {
       Mario: {
         on: {
           [Event.FeatherCollect]: {
-            target: Status.CapeMario
+            target: State.CapeMario
           },
           [Event.MushroomCollect]: {
-            target: Status.SuperMario
+            target: State.SuperMario
           },
           [Event.FlowerCollect]: {
-            target: Status.FireMario
+            target: State.FireMario
           }
         }
       },
-      [Status.CapeMario]: {
+      [State.CapeMario]: {
         on: {
           [Event.FlowerCollect]: {
-            target: Status.FireMario
+            target: State.FireMario
           }
         }
       },
-      [Status.SuperMario]: {
+      [State.SuperMario]: {
         on: {
           [Event.FeatherCollect]: {
-            target: Status.CapeMario
+            target: State.CapeMario
           },
           [Event.FlowerCollect]: {
-            target: Status.FireMario
+            target: State.FireMario
           }
         }
       },
-      [Status.FireMario]: {
+      [State.FireMario]: {
         on: {
           [Event.FeatherCollect]: {
-            target: Status.CapeMario
+            target: State.CapeMario
           }
         }
       }
     },
     types: {
-      events: {} as
-        | { type: Event.MushroomCollect }
-        | { type: Event.FeatherCollect }
-        | { type: Event.FlowerCollect }
+      events: {} as Events
     }
   },
   {
