@@ -3,10 +3,10 @@
 import React, { useEffect, useRef } from 'react'
 import kaboom from 'kaboom'
 import {
-  Event as MarioEvent,
   State as MarioState,
-  marioActor
-} from '@super-mario/react'
+  Player as MarioPlayer,
+  Power as MarioPower
+} from '../../lib/mario'
 
 export function MarioGame() {
   const gameRef = useRef<HTMLCanvasElement>(null)
@@ -92,6 +92,7 @@ export function MarioGame() {
 
     // Get the player object from tag
     const player = level.get('player')[0]
+    const marioPlayer = new MarioPlayer()
 
     // Movements
     onKeyPress('space', () => {
@@ -110,34 +111,36 @@ export function MarioGame() {
 
     // Eat
     player.onCollide('flower', (flower: any) => {
-      // Kaboom
       destroy(flower)
       play('score')
 
-      // MarioEvent
-      marioActor.send({ type: MarioEvent.FlowerCollect })
+      /**
+       * @code
+       * Write code below here
+       */
+      marioPlayer.collect(MarioPower.Flower)
     })
 
     player.onCollide('mushroom', (mushroom: any) => {
-      // Kaboom
       destroy(mushroom)
       play('score')
 
-      // MarioEvent
-      marioActor.send({ type: MarioEvent.MushroomCollect })
+      /**
+       * @code
+       * Write code below here
+       */
+      marioPlayer.collect(MarioPower.Mushroom)
     })
 
     player.onCollide('feather', (feather: any) => {
-      // Kaboom
       destroy(feather)
       play('score')
 
-      // MarioEvent
-      marioActor.send({ type: MarioEvent.FeatherCollect })
-    })
-
-    marioActor.subscribe((state) => {
-      player.use(sprite(state.value as string))
+      /**
+       * @code
+       * Write code below here
+       */
+      marioPlayer.collect(MarioPower.Feather)
     })
 
     return () => {

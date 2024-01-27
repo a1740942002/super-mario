@@ -110,29 +110,35 @@ export function MarioGame() {
 
     // Eat
     player.onCollide('flower', (flower: any) => {
-      // Kaboom
       destroy(flower)
       play('score')
 
-      // MarioEvent
+      /**
+       * @code
+       * Write code below here
+       */
       marioActor.send({ type: MarioEvent.FlowerCollect })
     })
 
     player.onCollide('mushroom', (mushroom: any) => {
-      // Kaboom
       destroy(mushroom)
       play('score')
 
-      // MarioEvent
+      /**
+       * @code
+       * Write code below here
+       */
       marioActor.send({ type: MarioEvent.MushroomCollect })
     })
 
     player.onCollide('feather', (feather: any) => {
-      // Kaboom
       destroy(feather)
       play('score')
 
-      // MarioEvent
+      /**
+       * @code
+       * Write code below here
+       */
       marioActor.send({ type: MarioEvent.FeatherCollect })
     })
 
