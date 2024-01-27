@@ -93,6 +93,9 @@ export function MarioGame() {
     // Get the player object from tag
     const player = level.get('player')[0]
     const marioPlayer = new MarioPlayer()
+    const updateWindow = (state: string) => {
+      player.use(sprite(state))
+    }
 
     // Movements
     onKeyPress('space', () => {
@@ -119,6 +122,7 @@ export function MarioGame() {
        * Write code below here
        */
       marioPlayer.collect(MarioPower.Flower)
+      updateWindow(marioPlayer.state)
     })
 
     player.onCollide('mushroom', (mushroom: any) => {
@@ -130,6 +134,7 @@ export function MarioGame() {
        * Write code below here
        */
       marioPlayer.collect(MarioPower.Mushroom)
+      updateWindow(marioPlayer.state)
     })
 
     player.onCollide('feather', (feather: any) => {
@@ -141,6 +146,7 @@ export function MarioGame() {
        * Write code below here
        */
       marioPlayer.collect(MarioPower.Feather)
+      updateWindow(marioPlayer.state)
     })
 
     return () => {

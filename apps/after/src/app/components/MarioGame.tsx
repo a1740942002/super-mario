@@ -92,6 +92,9 @@ export function MarioGame() {
 
     // Get the player object from tag
     const player = level.get('player')[0]
+    const updateWindow = (state: string) => {
+      player.use(sprite(state))
+    }
 
     // Movements
     onKeyPress('space', () => {
@@ -143,7 +146,7 @@ export function MarioGame() {
     })
 
     marioActor.subscribe((state) => {
-      player.use(sprite(state.value as string))
+      updateWindow(state.value as string)
     })
 
     return () => {
