@@ -11,7 +11,7 @@ export enum Power {
   Mushroom
 }
 
-export class Player {
+export class Character {
   state: State
 
   constructor() {

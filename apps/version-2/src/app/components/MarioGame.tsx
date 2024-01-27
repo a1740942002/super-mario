@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import kaboom from 'kaboom'
 import {
   State as MarioState,
-  Player as MarioPlayer,
+  Character as MarioCharacter,
   Power as MarioPower
 } from '../../lib/mario'
 
@@ -92,7 +92,7 @@ export function MarioGame() {
 
     // Get the player object from tag
     const player = level.get('player')[0]
-    const marioPlayer = new MarioPlayer()
+    const marioCharacter = new MarioCharacter()
     const updateWindow = (state: string) => {
       player.use(sprite(state))
     }
@@ -121,8 +121,8 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      marioPlayer.collect(MarioPower.Flower)
-      updateWindow(marioPlayer.state)
+      marioCharacter.collect(MarioPower.Flower)
+      updateWindow(marioCharacter.state)
     })
 
     player.onCollide('mushroom', (mushroom: any) => {
@@ -133,8 +133,8 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      marioPlayer.collect(MarioPower.Mushroom)
-      updateWindow(marioPlayer.state)
+      marioCharacter.collect(MarioPower.Mushroom)
+      updateWindow(marioCharacter.state)
     })
 
     player.onCollide('feather', (feather: any) => {
@@ -145,8 +145,8 @@ export function MarioGame() {
        * @code
        * Write code below here
        */
-      marioPlayer.collect(MarioPower.Feather)
-      updateWindow(marioPlayer.state)
+      marioCharacter.collect(MarioPower.Feather)
+      updateWindow(marioCharacter.state)
     })
 
     return () => {
