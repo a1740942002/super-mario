@@ -1,57 +1,66 @@
 import { createMachine } from 'xstate'
 import { State, Event, Events } from './types'
 
-export const marioMachine = createMachine(
-  {
-    id: 'Mario Machine',
-    initial: State.Mario,
-    states: {
-      Mario: {
-        on: {
-          [Event.FeatherCollect]: {
-            target: State.CapeMario
-          },
-          [Event.MushroomCollect]: {
-            target: State.SuperMario
-          },
-          [Event.FlowerCollect]: {
-            target: State.FireMario
-          }
-        }
-      },
-      [State.CapeMario]: {
-        on: {
-          [Event.FlowerCollect]: {
-            target: State.FireMario
-          }
-        }
-      },
-      [State.SuperMario]: {
-        on: {
-          [Event.FeatherCollect]: {
-            target: State.CapeMario
-          },
-          [Event.FlowerCollect]: {
-            target: State.FireMario
-          }
-        }
-      },
-      [State.FireMario]: {
-        on: {
-          [Event.FeatherCollect]: {
-            target: State.CapeMario
-          }
+const initialState = State.Mario
+
+export const marioMachine = createMachine({
+  id: 'Mario Machine',
+  initial: initialState,
+  states: {
+    Mario: {
+      on: {
+        [Event.FeatherCollect]: {
+          target: State.CapeMario
+        },
+        [Event.MushroomCollect]: {
+          target: State.SuperMario
+        },
+        [Event.FlowerCollect]: {
+          target: State.FireMario
         }
       }
     },
-    types: {
-      events: {} as Events
+    [State.CapeMario]: {
+      on: {
+        [Event.FlowerCollect]: {
+          target: State.FireMario
+        }
+      },
+      after: {
+        5000: {
+          target: initialState
+        }
+      }
+    },
+    [State.SuperMario]: {
+      on: {
+        [Event.FeatherCollect]: {
+          target: State.CapeMario
+        },
+        [Event.FlowerCollect]: {
+          target: State.FireMario
+        }
+      },
+      after: {
+        5000: {
+          target: initialState
+        }
+      }
+    },
+    [State.FireMario]: {
+      on: {
+        [Event.FeatherCollect]: {
+          target: State.CapeMario
+        }
+      },
+      after: {
+        5000: {
+          target: initialState
+        }
+      }
     }
   },
-  {
-    actions: {},
-    actors: {},
-    guards: {},
-    delays: {}
+  types: {
+    events: {} as Events
   }
-)
+})
